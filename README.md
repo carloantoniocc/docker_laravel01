@@ -1,12 +1,12 @@
-# docker_laravel01
+# Apuntes de Instalacion
+Una vez descargado el repositorio crear imagen, en background:
 
-Paso 1: 
-Una vez descargado el repositorio crear imagen, en background
-docker-compose up -d
+$docker-compose up -d
 
-Para revision:
-docker-compose image ls
-docker ps (apache ocupara el puerto 8080 desde el host)
+## Para revision:
+$docker-compose image ls
+
+$docker ps (apache ocupara el puerto 8080 desde el host)
 
 
 
