@@ -1,14 +1,38 @@
 version: "3.8"
 services:
-  php:
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    container_name: php-server
-    restart: always
-    ports:
-      - 8080:80
-    volumes:
-      - ./html:/var/www/html
+    www:
+        build: .
+        ports: 
+            - "8001:80"
+        volumes:
+            - ./html:/var/www/html/
+        links:
+            - db
+        networks:
+            - default
+    db:
+        image: mysql
+        ports: 
+            - "3306:3306"
+        environment:
+            MYSQL_DATABASE: sigdoc
+            MYSQL_USER: usr_sigdoc
+            MYSQL_PASSWORD: 8JgKiqQxBrHIW?8
+            MYSQL_ROOT_PASSWORD: 8JgKiqQxBrHIW?8
+        volumes:
+            - ./dump:/docker-entrypoint-initdb.d
+            - persistent:/var/lib/mysql
+        networks:
+            - default
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        links: 
+            - db:db
+        ports:
+            - 8000:80
+        environment:
+            MYSQL_USER: usr_sigdoc
+            MYSQL_PASSWORD: 8JgKiqQxBrHIW?8
+            MYSQL_ROOT_PASSWORD: 8JgKiqQxBrHIW?8
 volumes:
-  html: {}
+    persistent:
